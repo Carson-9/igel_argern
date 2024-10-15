@@ -19,9 +19,7 @@
                                                         \
 typedef struct linked_list_s type_linked_list_t;        \
                                                         \
-type_linked_list* type_list_create(void){               \
-
+type_linked_list* type_list_create(void){               \    
     
-
 }
 
