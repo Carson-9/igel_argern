@@ -129,6 +129,30 @@ depend:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argen.dir/build.make CMakeFiles/../igel_argen.dir/build
 .PHONY : ../igel_argen/fast
 
+home/carson/Desktop/Cours/proj_sys/src/logging.o: home/carson/Desktop/Cours/proj_sys/src/logging.c.o
+.PHONY : home/carson/Desktop/Cours/proj_sys/src/logging.o
+
+# target to build an object file
+home/carson/Desktop/Cours/proj_sys/src/logging.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argen.dir/build.make CMakeFiles/../igel_argen.dir/home/carson/Desktop/Cours/proj_sys/src/logging.c.o
+.PHONY : home/carson/Desktop/Cours/proj_sys/src/logging.c.o
+
+home/carson/Desktop/Cours/proj_sys/src/logging.i: home/carson/Desktop/Cours/proj_sys/src/logging.c.i
+.PHONY : home/carson/Desktop/Cours/proj_sys/src/logging.i
+
+# target to preprocess a source file
+home/carson/Desktop/Cours/proj_sys/src/logging.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argen.dir/build.make CMakeFiles/../igel_argen.dir/home/carson/Desktop/Cours/proj_sys/src/logging.c.i
+.PHONY : home/carson/Desktop/Cours/proj_sys/src/logging.c.i
+
+home/carson/Desktop/Cours/proj_sys/src/logging.s: home/carson/Desktop/Cours/proj_sys/src/logging.c.s
+.PHONY : home/carson/Desktop/Cours/proj_sys/src/logging.s
+
+# target to generate assembly for a file
+home/carson/Desktop/Cours/proj_sys/src/logging.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argen.dir/build.make CMakeFiles/../igel_argen.dir/home/carson/Desktop/Cours/proj_sys/src/logging.c.s
+.PHONY : home/carson/Desktop/Cours/proj_sys/src/logging.c.s
+
 home/carson/Desktop/Cours/proj_sys/src/main.o: home/carson/Desktop/Cours/proj_sys/src/main.c.o
 .PHONY : home/carson/Desktop/Cours/proj_sys/src/main.o
 
@@ -210,6 +234,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... ../igel_argen"
+	@echo "... home/carson/Desktop/Cours/proj_sys/src/logging.o"
+	@echo "... home/carson/Desktop/Cours/proj_sys/src/logging.i"
+	@echo "... home/carson/Desktop/Cours/proj_sys/src/logging.s"
 	@echo "... home/carson/Desktop/Cours/proj_sys/src/main.o"
 	@echo "... home/carson/Desktop/Cours/proj_sys/src/main.i"
 	@echo "... home/carson/Desktop/Cours/proj_sys/src/main.s"
