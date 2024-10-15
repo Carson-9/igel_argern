@@ -1,1 +1,0 @@
-/usr/bin/cc -Wall -Wextra -pedantic -g -rdynamic CMakeFiles/../igel_argen.dir/home/carson/Desktop/Cours/proj_sys/src/main.c.o CMakeFiles/../igel_argen.dir/home/carson/Desktop/Cours/proj_sys/src/plateau.c.o CMakeFiles/../igel_argen.dir/home/carson/Desktop/Cours/proj_sys/src/stack.c.o -o ../igel_argen

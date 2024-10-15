@@ -1,3 +1,0 @@
-/home/carson/Desktop/Cours/proj_sys/build/CMakeFiles/../igel_argen.dir
-/home/carson/Desktop/Cours/proj_sys/build/CMakeFiles/edit_cache.dir
-/home/carson/Desktop/Cours/proj_sys/build/CMakeFiles/rebuild_cache.dir
