@@ -34,7 +34,6 @@ void info_terminal(char* message);
 void warn_terminal(char* message);
 void error_terminal(char* message);
 
-
 #define INFO_TERMINAL(msg) info_terminal(msg)
 #define ERROR_TERMINAL(msg) error_terminal(msg)
 
