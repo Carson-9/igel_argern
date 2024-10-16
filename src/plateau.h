@@ -24,14 +24,19 @@
 #define DEFAULT_LINE_COUNT 6
 #define DEFAULT_ROW_COUNT 9
 #define DEFAULT_PLAYER_COUNT 4
-#define DEFAULT_HEDGEHOG_COUNT 4  
+#define DEFAULT_HEDGEHOG_COUNT 4
+
+
+#define PRINT_FORMAT_LINE_INFO_SIZE 6
+#define PRINT_FORMAT_LINE_CELL_SIZE 5
+#define PRINT_FORMAT_LINE_SPACING 1
 
 typedef struct cell_s{
 
     // Le stack sera pseudo-statique : L'utilisation d'un malloc est obligatoire, mais nous nous permetterons d'allouer un tableau de taille maximale dès le début
 
     u8* stack;      // Stocke les "hérissons" comme des caractères MAJUSCULE, toute apparition de minuscule doit résulter d'un offset imputé au caller.
-    i32 s_top;      // Le haut de la pile se lit a stack[s_top]
+    u32 s_top;      // Le haut de la pile se lit a stack[s_top]
     b8 is_trap;
 
 } cell_t;
