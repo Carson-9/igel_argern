@@ -1,10 +1,25 @@
 #pragma once
 
-#include "types.h"
 #include "build_options.h"
+#include "types.h"
 #include "logging.h"
 #include <stdio.h>
 #include <stdlib.h>
+
+/*
+
+    Auteur : Simon et William
+    Contenu : La définition et création du plateau et des cases le composant. Opérations de base sur les stacks et affichage du tableau
+
+    Dépendances : 
+        - build_options.h   Permet de déterminer si le build actuel est de debug ou bien de production
+        - types.h           Donne des définitions pour les types de base, permettant un contrôle accru
+        - logging.h         Fonctions générales de log, pour build debug ou de production
+        - stdio.h           Pour interfaçer avec les fonctions de print usuelles        
+        - stdlib.h          Pour l'allocation des tableaux et cases considérées
+*/
+
+
 
 #define DEFAULT_LINE_COUNT 6
 #define DEFAULT_ROW_COUNT 9

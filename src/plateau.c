@@ -4,7 +4,7 @@ u16 point_to_index_conversion(u8 line, u8 row, u8 line_count, u8 row_count){
 
     // Le modulo permet juste d'éviter les problèmes d'accès mémoire non autorisés, log warning pour les builds debug
 
-    if(line >= line_count || row >= row_count) INFO_TERMINAL("point_to_index_conversion -> Les points considérés sont en dehors du tableau!!");
+    if(line >= line_count || row >= row_count) WARN_TERMINAL("point_to_index_conversion -> Les points considérés sont en dehors du tableau!!");
     return (line * row_count + row) % (line_count * row_count) ;
 }
 
@@ -108,7 +108,7 @@ void cell_print(board_t* b, u8 line, u8 row, u8 slice){
 
     if(slice==3 && height > 1){
         if(c->is_trap){
-            printf(" ^%d^ ");
+            printf(" ^%d^ ", height);
         }
         else{
             printf(" -%d- ", height);
