@@ -1,0 +1,7 @@
+/build/*
+/ressources/*
+!README.md
+!/src/*.h
+!/src/*.c
+!/build/CMakeLists.txt
+!.gitignore
