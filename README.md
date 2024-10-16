@@ -11,9 +11,12 @@ Réalisé par : William et Simon
 ./igel_argern <options>
 
 Les options disponibles sont :
- - -lig : Le nombre de lignes sur le plateau
- - -col : Le nombre de colonnes sur le plateau
- - -j : Le nombre de joueurs souhaités dans la partie
+    
+ - -h, -help : Aide sur les paramètres disponibles et sur l'utilisation du programme 
+ - -lignes : Le nombre de lignes sur le plateau
+ - -colonnes : Le nombre de colonnes sur le plateau
+ - -joueurs : Le nombre de joueurs souhaités dans la partie
+ - -herissons : Le nombre de hérissons par joueur
 
 
 ## Build

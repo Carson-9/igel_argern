@@ -1,3 +1,4 @@
+/*
 #include "plateau.h"
 #include "logging.h"
 #include <stdlib.h>
@@ -11,4 +12,4 @@ int main(int argc, char** argv){
 
     board_free(new_board);
     return EXIT_SUCCESS;
-}
+}*/
