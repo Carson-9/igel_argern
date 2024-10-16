@@ -1,4 +1,4 @@
-# Igel Ärgens
+# Igel Ärgern
 
 ## Un repo contenant le projet de système 1 : Igel Ärgern
 
