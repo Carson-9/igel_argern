@@ -2,6 +2,7 @@
 
 #include "build_options.h"
 #include <stdio.h>
+// #include <stdarg.h>
 
 /*
 
@@ -10,8 +11,9 @@
     dans un build de production
 
     Dépendances : 
-        - build_options.h
-        - stdio.h
+        - build_options.h   Permet de déterminer si le build actuel est de debug ou bien de production
+        - stdio.h           Pour interfaçer avec les fonctions de print usuelles        
+        x stdarg.h          Arguments variadiques
 */
 
 
@@ -25,7 +27,7 @@ typedef enum log_level_e{
 
 void message_terminal(log_level_t type, char* message);
 void message_error_channel(log_level_t type, char* message);
-void write_file(log_level_t, char* file, char* message);
+void write_file(log_level_t type, char* file, char* message);
 
 void trace_terminal(char* message);
 void info_terminal(char* message);
@@ -37,10 +39,17 @@ void error_terminal(char* message);
 #define ERROR_TERMINAL(msg) error_terminal(msg)
 
 #ifdef DEBUG_BUILD
+
+    // Les builds de debug affichent les traces
+
     #define TRACE_TERMINAL(msg) trace_terminal(msg)
     #define WARN_TERMINAL(msg) warn_terminal(msg)
 #endif
+
 #ifdef PROD_BUILD
+
+    // Dans un build de production, ne pas log les traces informatives et les warnings
+
     #define TRACE_TERMINAL(msg)
     #define WARN_TERMINAL(msg)
 #endif
