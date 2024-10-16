@@ -147,12 +147,12 @@ void cell_print(board_t* b, u8 line, u8 row, u8 slice){
         case 3: // Troisième ligne interne
 
             if(hedgehog_count >= 2){
-                if(c.is_trap) printf(" ^%d^", hedgehog_count);
+                if(c.is_trap) printf(" ^%d^ ", hedgehog_count);
                 else printf(" -%d- ", hedgehog_count);
             }
 
             else{
-                if(c.is_trap) printf(" ^^^");
+                if(c.is_trap) printf(" ^^^ ");
                 else printf(" --- ");
             }
 
