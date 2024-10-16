@@ -47,7 +47,7 @@ void error_terminal(char* message);
 
 #ifdef PROD_BUILD
 
-    // Dans un build de production, ne pas log les traces informatives et les warnings
+    // Dans un build de production, ne pas log les traces informatives et les warnings (remplacés par une instruction vide)
 
     #define TRACE_TERMINAL(msg)
     #define WARN_TERMINAL(msg)

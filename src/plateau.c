@@ -246,11 +246,13 @@ void bottom_print(board_t* b){
 
 void board_print(board_t* b, u8 highlighted_line){
 
+    printf("\n");
     top_print(b);
 
     for(u8 i = 0; i < b->line_count; i++){
         line_print(b, i, i == highlighted_line);
     }
     bottom_print(b);
+    printf("\n");
 }
 
