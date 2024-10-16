@@ -132,14 +132,55 @@ void top_print(board_t* b){
     printf("\n");
 }
 
-void line_print(board_t* b, u8 line, u8 highlighted_line){
-    printf("     ");
+void line_print(board_t* b, u8 line, b8 is_highlighted){
+    char last = ' ';
+    if(is_highlighted){
+        last = '>';
+    }
+    
+    printf("    %c", last);
     for(int i = 0; i < b->row_count; i++){
          cell_print(b, line, i, 0);
     }
+
+    printf("\nline%c", last);
+    for(int i = 0; i < b->row_count; i++){
+         cell_print(b, line, i, 1);
+    }
+
+    printf("\n  %d %c", line, last);
+    for(int i = 0; i < b->row_count; i++){
+         cell_print(b, line, i, 2);
+    }
+
+    printf("\n    %c", last);
+    for(int i = 0; i < b->row_count; i++){
+         cell_print(b, line, i, 3);
+    }
+
+    printf("\n\n");
+}
+
+void bottom_print(board_t* b){
+     printf("     ");
+    for(int i = 0; i < b->row_count; i++){
+        printf("  row ");
+    }
+    printf("\n");
+
+    printf("     ");
+    for(int i = 0; i < b->row_count; i++){
+        printf("   %c  ", 'a'+i);
+    }
+    printf("\n");
+
 }
 
 void board_print(board_t* b, u8 highlighted_line){
-
+    top_print(b);
+    for(u8 i = 0; i < b->row_count; i++){
+        line_print(b, i, i==highlighted_line);
+    }
+    bottom_print(b);
 }
 
