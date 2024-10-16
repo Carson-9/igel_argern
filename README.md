@@ -1,6 +1,6 @@
 # Igel Ärgens
 
-## Un repo contenant le projet de système 1 : Igel Ärgens
+## Un repo contenant le projet de système 1 : Igel Ärgern
 
 Réalisé par : William et Simon
 
@@ -8,7 +8,7 @@ Réalisé par : William et Simon
 
 ## Utilisation
 
-./igel_argens <options>
+./igel_argern <options>
 
 Les options disponibles sont :
  - -lig : Le nombre de lignes sur le plateau
@@ -18,7 +18,7 @@ Les options disponibles sont :
 
 ## Build
 
-Nous avons utilisé l'utilitaire cmake afin de produire un makefile exhaustif relativement facilement. Afin d'utiliser ce fichier, il suffit de se placer dans le dossier build et de lancer cmake à cet endroit. L'utilisation du makefile produit engendrera un exécutable "igel_argens" à la racine du projet
+Nous avons utilisé l'utilitaire cmake afin de produire un makefile exhaustif relativement facilement. Afin d'utiliser ce fichier, il suffit de se placer dans le dossier build et de lancer cmake à cet endroit. L'utilisation du makefile produit engendrera un exécutable "igel_argern" à la racine du projet
 
 
 ## Contenu 

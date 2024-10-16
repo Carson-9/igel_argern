@@ -1,3 +1,3 @@
-project(igel_argens)
+project(igel_argern)
 set(CMAKE_C_FLAGS "-Wall -Wextra -pedantic -g")
-add_executable(../igel_argens ../src/main.c ../src/plateau.c ../src/plateau.h ../src/types.h ../src/logging.h ../src/logging.c ../src/build_options.h)
+add_executable(../igel_argern ../src/main.c ../src/plateau.c ../src/plateau.h ../src/types.h ../src/logging.h ../src/logging.c ../src/build_options.h)
