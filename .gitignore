@@ -1,0 +1,9 @@
+igel_argen
+igel_argens
+/build/*
+/resources/*
+!README.md
+!/src/*.c
+!/src/*.h
+!/build/CMakeLists.txt
+!.gitignore
