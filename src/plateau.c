@@ -214,7 +214,8 @@ void line_print(board_t* b, u8 line, b8 is_highlighted){
          cell_print(b, line, i, 1);
     }
 
-    printf("\n  %d %c", line, highlight_character);
+    if(line >= 10) printf("\n %d %c", line, highlight_character);
+    else printf("\n %d  %c", line, highlight_character);
     for(int i = 0; i < b->row_count; i++){
          printf("  ");
          cell_print(b, line, i, 2);

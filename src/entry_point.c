@@ -45,14 +45,14 @@ int main(int argc, char** argv){
                 \n\
     * PARAMÈTRES :                                                      \n\
         -h, -help       : Affiche le menu d'aide ci-présent             \n\
-        -lignes y       : Permet d'imposer un tableau à y lignes        \n\
-        -colonnes y     : Permet d'imposer un tableau à x colonnes      \n\
-        -joueurs z      : Impose un nombre z de joueurs                 \n\
-        -herissons h    : Chaque joueur commencera avec h hérissons     \n\
+        -lignes y       : Permet d'imposer un tableau à y lignes (y <= %d)       \n\
+        -colonnes y     : Permet d'imposer un tableau à x colonnes (x <= %d)     \n\
+        -joueurs z      : Impose un nombre z de joueurs (z <= %d)                \n\
+        -herissons h    : Chaque joueur commencera avec h hérissons (h <= %d)     \n\
                 \n\
     * COMMENT JOUER :                                                   \n\
                                                                                     \n\
-            ");
+            ", MAX_LINE_COUNT, MAX_ROW_COUNT, MAX_PLAYER_COUNT, MAX_HEDGEHOG_COUNT);
 
             return EXIT_SUCCESS;
         }
@@ -69,7 +69,11 @@ int main(int argc, char** argv){
             // Avant qu'une guerre civile n'explose à cause de l'utilisation de ++cur_argument,
             // Cet usage permet de passer un tour de boucle et d'éviter des cas désagréables lorsqu'un argument n'est pas connu
     
-            else line_count = atoi(argv[++cur_argument]);  
+            else{
+                line_count = atoi(argv[++cur_argument]);
+                if(line_count >= MAX_LINE_COUNT) WARN_TERMINAL("NOMBRE DE LIGNES TROP ÉLEVÉ!");
+                line_count = line_count % MAX_LINE_COUNT;
+            }
         }
 
 
@@ -79,7 +83,11 @@ int main(int argc, char** argv){
                 return EXIT_FAILURE;
             }
 
-            else row_count = atoi(argv[++cur_argument]);
+            else{
+                row_count = atoi(argv[++cur_argument]);
+                if(row_count >= MAX_ROW_COUNT) WARN_TERMINAL("NOMBRE DE COLONNES TROP ÉLEVÉ!");
+                row_count = row_count % MAX_ROW_COUNT;
+            }
         }
 
         else if(strcmp(argv[cur_argument], "-joueurs") == 0){
@@ -88,8 +96,11 @@ int main(int argc, char** argv){
                 return EXIT_FAILURE;
             }
 
-            else player_count = atoi(argv[++cur_argument]);
-            
+            else{
+                player_count = atoi(argv[++cur_argument]);
+                if(player_count >= MAX_PLAYER_COUNT) WARN_TERMINAL("NOMBRE DE JOUEURS TROP ÉLEVÉ");
+                player_count = player_count % MAX_PLAYER_COUNT;
+            } 
         }
 
         else if(strcmp(argv[cur_argument], "-herissons") == 0){
@@ -98,7 +109,11 @@ int main(int argc, char** argv){
                 return EXIT_FAILURE;
             }
 
-            else hedgehog_count = atoi(argv[++cur_argument]);
+            else{
+                hedgehog_count = atoi(argv[++cur_argument]);
+                if(hedgehog_count >= MAX_HEDGEHOG_COUNT) WARN_TERMINAL("NOMBRE DE HÉRISSONS TROP ÉLEVÉ");
+                hedgehog_count = hedgehog_count % MAX_HEDGEHOG_COUNT;
+            }
         }
 
         else{       // Le paramètre est inconnu
@@ -108,7 +123,7 @@ int main(int argc, char** argv){
     }
 
     board_t* new_board = board_alloc(line_count, row_count, player_count, hedgehog_count);
-    board_print(new_board, -1); //TEST, doit passer la main à game_logic.c
+    board_print(new_board, 10); //TEST, doit passer la main à game_logic.c
 
 
     board_free(new_board);
