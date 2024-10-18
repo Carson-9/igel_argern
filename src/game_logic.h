@@ -20,7 +20,6 @@
         - plateau.h         Permet de manipuler le plateau via les fonctions et méthodes fournies (AUCUNE MANIPULATION DIRECTE N'EST AUTORISÉE)
         - stdio.h           Pour interfaçer avec les fonctions de print usuelles        
         - stdlib.h          Pour l'allocation des tableaux et cases considérées
-        - time.h            Permet d'initialiser un générateur pseudo-aléatoire
 */
 
 
@@ -28,7 +27,7 @@
 u8 dice_roll(u8 max_value);
 
 
-/*
+
 void play_round_single_player(board_t* b, u8 player);
 void play_round_every_player(board_t* b);
 
@@ -36,7 +35,7 @@ void play_round_every_player(board_t* b);
 
 void print_players_rank(board_t* b);
 
-*/
+
 
 
 

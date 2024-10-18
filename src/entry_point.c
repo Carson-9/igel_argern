@@ -72,7 +72,9 @@ int main(int argc, char** argv){
             }
 
             // Avant qu'une guerre civile n'explose à cause de l'utilisation de ++cur_argument,
-            // Cet usage permet de passer un tour de boucle et d'éviter des cas désagréables lorsqu'un argument n'est pas connu
+            // Cet usage permet de passer un tour de boucle et d'éviter des cas désagréables lorsqu'un argument n'est pas connu.
+            // Ceci aura pour effet de ne pas considérer une valeur passée à un paramètre (quitte à ce que ce dernier soit un string
+            // et que la fonction atoi renvoie n'importe quoi)
     
             else{
 
