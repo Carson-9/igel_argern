@@ -27,7 +27,7 @@
 #define DEFAULT_HEDGEHOG_COUNT 4
 
 #define MAX_LINE_COUNT 100
-#define MAX_ROW_COUNT 100
+#define MAX_ROW_COUNT 26
 #define MAX_PLAYER_COUNT 100
 #define MAX_HEDGEHOG_COUNT 100
 
@@ -50,14 +50,28 @@ typedef struct board_s{
 
     u8 row_count;
     u8 line_count;
-    cell_t* cells;    // La manipulation d'un unique indice s'avère beaucoup plus simple finalement ...
+    u8 player_count;
+    u8 hedgehog_count;
+
+    cell_t* cells;                  // La manipulation d'un unique indice s'avère beaucoup plus simple finalement ...
+    u8* cleared_hedgehog_count;     // Tableau dénotant le nombre de hérissons du joueur i ayant terminé la course à la case du même indice
+    
 } board_t;
 
-
+b8 point_is_in_board(u8 line, u8 row, u8 line_count, u8 row_count);
 u16 point_to_index_conversion(u8 line, u8 row, u8 line_count, u8 row_count);
+
+// Allocation du plateau
 
 board_t* board_alloc(u8 line_count, u8 row_count, u8 player_count, u8 hedgehog_count);
 void board_free(board_t* board);
+
+
+// Setup d'une partie par défaut
+
+void board_setup_default(board_t* board);
+
+// Fonctions d'interface
 
 void board_push(board_t* b, u8 line, u8 row, u8 ctn);
 
@@ -69,10 +83,15 @@ u8 board_top(board_t* b, u8 line, u8 row);
 
 u8 board_peek(board_t* b, u8 line, u8 row, u8 pos); // pos=0 => top
 
+b8 board_is_cell_trap(board_t* b, u8 line, u8 row); // Renvoie un booléen indiquant si la case pointée est piégée
+
+u8 board_add_cleared_hedgehog(board_t* b, u16 player);  // Ajoute un hérisson gagnant au joueur souhaité
+
+// Fonctions d'affichage
+
 void cell_print(board_t* b, u8 line, u8 row, u8 slice);
 
 void board_print(board_t* b, u8 highlighted_line); // hl_line=-1 => rien
-
 
 void top_print(board_t* b);                                 // Affiche la bordurde haute
 void line_print(board_t* b, u8 line, b8 is_highlighted);    // Controle l'affichage ligne par ligne (dont la bordure)

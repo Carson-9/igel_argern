@@ -25,11 +25,16 @@
 
 int main(int argc, char** argv){
 
+    // Définit les constantes de la partie aux valeurs de base, potentiellement réécrites par des paramètres par la suite
+
     u8 line_count = DEFAULT_LINE_COUNT;
     u8 row_count = DEFAULT_ROW_COUNT;
     u8 player_count = DEFAULT_PLAYER_COUNT;
     u8 hedgehog_count = DEFAULT_HEDGEHOG_COUNT;
 
+    // Initialise l'aléa
+
+    srand(time(NULL));
 
     // Parsing des paramètres d'entrée 
 
@@ -70,6 +75,7 @@ int main(int argc, char** argv){
             // Cet usage permet de passer un tour de boucle et d'éviter des cas désagréables lorsqu'un argument n'est pas connu
     
             else{
+
                 line_count = atoi(argv[++cur_argument]);
                 if(line_count >= MAX_LINE_COUNT) WARN_TERMINAL("NOMBRE DE LIGNES TROP ÉLEVÉ!");
                 line_count = line_count % MAX_LINE_COUNT;
@@ -123,6 +129,7 @@ int main(int argc, char** argv){
     }
 
     board_t* new_board = board_alloc(line_count, row_count, player_count, hedgehog_count);
+    board_setup_default(new_board);
     board_print(new_board, 10); //TEST, doit passer la main à game_logic.c
 
 

@@ -1,10 +1,14 @@
 #include "plateau.h"
 
+b8 point_is_in_board(u8 line, u8 row, u8 line_count, u8 row_count){
+    return (line >= line_count || row >= row_count);
+}
+
 u16 point_to_index_conversion(u8 line, u8 row, u8 line_count, u8 row_count){
 
     // Le modulo permet juste d'éviter les problèmes d'accès mémoire non autorisés, log warning pour les builds debug
 
-    if(line >= line_count || row >= row_count) WARN_TERMINAL("point_to_index_conversion -> Les points considérés sont en dehors du tableau!!");
+    if(point_is_in_board(line, row, line_count, row_count)) WARN_TERMINAL("point_to_index_conversion -> Les points considérés sont en dehors du tableau!!");
     return (line * row_count + row) % (line_count * row_count) ;
 }
 
@@ -21,10 +25,15 @@ board_t* board_alloc(u8 line_count, u8 row_count, u8 player_count, u8 hedgehog_c
 
     new_board->row_count = row_count;
     new_board->line_count = line_count;
-    new_board->cells = (cell_t*)malloc(line_count * row_count * sizeof(cell_t));
+    new_board->player_count = player_count;
 
-    if(!new_board->cells){  // TODO: Créer une macro magique pour observer les bad allocations et les log avec __FILE__ __LINE__ ...
-        ERROR_TERMINAL("board_init -> L'allocation des cases n'a pas réussi!");
+    new_board->cells = (cell_t*)malloc(line_count * row_count * sizeof(cell_t));
+    new_board->cleared_hedgehog_count = (u8*)malloc(player_count * sizeof(u8));
+
+    if(!new_board->cells || !new_board->cleared_hedgehog_count){  // TODO: Créer une macro magique pour observer les bad allocations et les log avec __FILE__ __LINE__ ...
+        ERROR_TERMINAL("board_init -> L'allocation des tableaux interne n'a pas réussi!");
+        if(new_board->cells) free(new_board->cells);
+        if(new_board->cleared_hedgehog_count) free(new_board->cleared_hedgehog_count);
         free(new_board);
         return NULL;
     }
@@ -55,6 +64,31 @@ void board_free(board_t* board){
     free(board->cells);
     free(board);
 }
+
+
+
+
+void board_setup_default(board_t* board){
+
+    // Mise en place des cases piégées, fixées universellement sur tout tableau
+
+    u16 piege_1_case = point_to_index_conversion(0, 2, board->line_count, board->row_count);
+    u16 piege_2_case = point_to_index_conversion(1, 6, board->line_count, board->row_count);
+    u16 piege_3_case = point_to_index_conversion(2, 4, board->line_count, board->row_count);
+    u16 piege_4_case = point_to_index_conversion(3, 5, board->line_count, board->row_count);
+    u16 piege_5_case = point_to_index_conversion(4, 3, board->line_count, board->row_count);
+    u16 piege_6_case = point_to_index_conversion(5, 7, board->line_count, board->row_count);
+
+    if(point_is_in_board(0, 2, board->line_count, board->row_count)) board->cells[piege_1_case].is_trap = 1;
+    if(point_is_in_board(1, 6, board->line_count, board->row_count)) board->cells[piege_2_case].is_trap = 1;
+    if(point_is_in_board(2, 4, board->line_count, board->row_count)) board->cells[piege_3_case].is_trap = 1;
+    if(point_is_in_board(3, 5, board->line_count, board->row_count)) board->cells[piege_4_case].is_trap = 1;
+    if(point_is_in_board(4, 3, board->line_count, board->row_count)) board->cells[piege_5_case].is_trap = 1;
+    if(point_is_in_board(5, 7, board->line_count, board->row_count)) board->cells[piege_6_case].is_trap = 1;
+
+}
+
+
 
 
 void board_push(board_t* b, u8 line, u8 row, u8 hedgehog){
@@ -103,6 +137,28 @@ u8 board_peek(board_t* b, u8 line, u8 row, u8 pos){
 
 }
 
+
+b8 board_is_cell_trap(board_t* b, u8 line, u8 row){
+
+    u16 projected_index = point_to_index_conversion(line, row, b->line_count, b->row_count);
+    return (b->cells[projected_index].is_trap);    
+    
+}
+
+u8 board_add_cleared_hedgehog(board_t* b, u16 player){
+
+    // Les joueurs sont indicés à partir de zéro!
+
+    if(player >= b->player_count){
+        ERROR_TERMINAL("board_add_cleared_hedgehog -> Le joueur n'est pas connu!");
+        return 0;
+    }
+
+    return ++(b->cleared_hedgehog_count[player]);
+}   
+
+
+
 void cell_print(board_t* b, u8 line, u8 row, u8 slice){
 
     i8 uppercase_to_lowercase_offset = 'a' - 'A';
@@ -146,9 +202,19 @@ void cell_print(board_t* b, u8 line, u8 row, u8 slice){
 
         case 3: // Troisième ligne interne
 
-            if(hedgehog_count >= 2){
+            if(hedgehog_count >= 2 && hedgehog_count <= 9){
                 if(c.is_trap) printf(" ^%d^ ", hedgehog_count);
                 else printf(" -%d- ", hedgehog_count);
+            }
+
+            else if(hedgehog_count >= 10 && hedgehog_count <= 99){
+                if(c.is_trap) printf(" %d^ ", hedgehog_count);
+                else printf(" %d- ", hedgehog_count);
+            }
+
+            else if (hedgehog_count >= 100 && hedgehog_count <= 999){
+                if(c.is_trap) printf(" %d ", hedgehog_count);
+                else printf(" %d ", hedgehog_count);
             }
 
             else{
@@ -214,8 +280,8 @@ void line_print(board_t* b, u8 line, b8 is_highlighted){
          cell_print(b, line, i, 1);
     }
 
-    if(line >= 10) printf("\n %d %c", line, highlight_character);
-    else printf("\n %d  %c", line, highlight_character);
+    if(line >= 9) printf("\n %d %c", line + 1, highlight_character);
+    else printf("\n  %d %c", line + 1, highlight_character);
     for(int i = 0; i < b->row_count; i++){
          printf("  ");
          cell_print(b, line, i, 2);
