@@ -104,8 +104,8 @@ void board_push(board_t* b, u8 line, u8 row, u8 hedgehog){
 
 u8 board_pop(board_t* b, u8 line, u8 row){
 
-    cell_t c = b->cells[point_to_index_conversion(line, row, b->line_count, b->row_count)];
-    if(c.s_top) return c.stack[--c.s_top];      // Conversion booléenne implicite
+    cell_t* c = &b->cells[point_to_index_conversion(line, row, b->line_count, b->row_count)];
+    if(c->s_top) return c->stack[--c->s_top];      // Conversion booléenne implicite
 
     else{
         ERROR_TERMINAL("board_pop -> La pile est vide!");
@@ -116,15 +116,15 @@ u8 board_pop(board_t* b, u8 line, u8 row){
 
 i32 board_height(board_t* b, u8 line, u8 row){
 
-    cell_t c = b->cells[point_to_index_conversion(line, row, b->line_count, b->row_count)];
-    return c.s_top;
+    cell_t* c = &b->cells[point_to_index_conversion(line, row, b->line_count, b->row_count)];
+    return c->s_top;
 
 }
 
 u8 board_top(board_t* b, u8 line, u8 row){
 
-    cell_t c = b->cells[point_to_index_conversion(line, row, b->line_count, b->row_count)];
-    if(c.s_top) return c.stack[c.s_top - 1]; // Conversion booléenne implicite
+    cell_t* c = &b->cells[point_to_index_conversion(line, row, b->line_count, b->row_count)];
+    if(c->s_top) return c->stack[c->s_top - 1]; // Conversion booléenne implicite
     
     else{
         ERROR_TERMINAL("board_top -> Le hérisson demandé n'existe pas!");
@@ -135,14 +135,14 @@ u8 board_top(board_t* b, u8 line, u8 row){
 
 u8 board_peek(board_t* b, u8 line, u8 row, u8 pos){
 
-    cell_t c = b->cells[point_to_index_conversion(line, row, b->line_count, b->row_count)];
+    cell_t* c = &b->cells[point_to_index_conversion(line, row, b->line_count, b->row_count)];
 
-    if(pos >= c.s_top){
+    if(pos >= c->s_top){
         ERROR_TERMINAL("board_peek -> Peeked position is outside of the stack!");
         return 0;
     }
 
-    return c.stack[(c.s_top - 1) - pos];
+    return c->stack[(c->s_top - 1) - pos];
 
 }
 
@@ -173,6 +173,8 @@ void cell_print(board_t* b, u8 line, u8 row, u8 slice){
     u8 top = 'X';   // Permet de voir des cas non-traités
     i8 uppercase_to_lowercase_offset = 'a' - 'A';
 
+    // OK d'avoir une copie locale, nous ne faisons que lire
+    
     cell_t c = b->cells[point_to_index_conversion(line, row, b->line_count, b->row_count)];
     u32 hedgehog_count = board_height(b, line, row);
     if(hedgehog_count) top = board_top(b, line, row);   // Conversion booléenne implicite
