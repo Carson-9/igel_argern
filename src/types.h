@@ -1,9 +1,11 @@
 #pragma once
 
 /*
-    Types.h
+    Auteur : William
+    Contenu : Fichier de définition de types donnant un contrôle plus précis
 
-    Fichier de définition de types donnant un contrôle plus précis
+    Dépendances :
+        Aucune
 
 */
 

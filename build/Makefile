@@ -117,24 +117,72 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named ../igel_argens
+# Target rules for targets named ../igel_argern
 
 # Build rule for target.
-../igel_argens: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ../igel_argens
-.PHONY : ../igel_argens
+../igel_argern: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ../igel_argern
+.PHONY : ../igel_argern
 
 # fast build rule for target.
-../igel_argens/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argens.dir/build.make CMakeFiles/../igel_argens.dir/build
-.PHONY : ../igel_argens/fast
+../igel_argern/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argern.dir/build.make CMakeFiles/../igel_argern.dir/build
+.PHONY : ../igel_argern/fast
+
+home/carson/Desktop/Cours/proj_sys/src/entry_point.o: home/carson/Desktop/Cours/proj_sys/src/entry_point.c.o
+.PHONY : home/carson/Desktop/Cours/proj_sys/src/entry_point.o
+
+# target to build an object file
+home/carson/Desktop/Cours/proj_sys/src/entry_point.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argern.dir/build.make CMakeFiles/../igel_argern.dir/home/carson/Desktop/Cours/proj_sys/src/entry_point.c.o
+.PHONY : home/carson/Desktop/Cours/proj_sys/src/entry_point.c.o
+
+home/carson/Desktop/Cours/proj_sys/src/entry_point.i: home/carson/Desktop/Cours/proj_sys/src/entry_point.c.i
+.PHONY : home/carson/Desktop/Cours/proj_sys/src/entry_point.i
+
+# target to preprocess a source file
+home/carson/Desktop/Cours/proj_sys/src/entry_point.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argern.dir/build.make CMakeFiles/../igel_argern.dir/home/carson/Desktop/Cours/proj_sys/src/entry_point.c.i
+.PHONY : home/carson/Desktop/Cours/proj_sys/src/entry_point.c.i
+
+home/carson/Desktop/Cours/proj_sys/src/entry_point.s: home/carson/Desktop/Cours/proj_sys/src/entry_point.c.s
+.PHONY : home/carson/Desktop/Cours/proj_sys/src/entry_point.s
+
+# target to generate assembly for a file
+home/carson/Desktop/Cours/proj_sys/src/entry_point.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argern.dir/build.make CMakeFiles/../igel_argern.dir/home/carson/Desktop/Cours/proj_sys/src/entry_point.c.s
+.PHONY : home/carson/Desktop/Cours/proj_sys/src/entry_point.c.s
+
+home/carson/Desktop/Cours/proj_sys/src/game_logic.o: home/carson/Desktop/Cours/proj_sys/src/game_logic.c.o
+.PHONY : home/carson/Desktop/Cours/proj_sys/src/game_logic.o
+
+# target to build an object file
+home/carson/Desktop/Cours/proj_sys/src/game_logic.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argern.dir/build.make CMakeFiles/../igel_argern.dir/home/carson/Desktop/Cours/proj_sys/src/game_logic.c.o
+.PHONY : home/carson/Desktop/Cours/proj_sys/src/game_logic.c.o
+
+home/carson/Desktop/Cours/proj_sys/src/game_logic.i: home/carson/Desktop/Cours/proj_sys/src/game_logic.c.i
+.PHONY : home/carson/Desktop/Cours/proj_sys/src/game_logic.i
+
+# target to preprocess a source file
+home/carson/Desktop/Cours/proj_sys/src/game_logic.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argern.dir/build.make CMakeFiles/../igel_argern.dir/home/carson/Desktop/Cours/proj_sys/src/game_logic.c.i
+.PHONY : home/carson/Desktop/Cours/proj_sys/src/game_logic.c.i
+
+home/carson/Desktop/Cours/proj_sys/src/game_logic.s: home/carson/Desktop/Cours/proj_sys/src/game_logic.c.s
+.PHONY : home/carson/Desktop/Cours/proj_sys/src/game_logic.s
+
+# target to generate assembly for a file
+home/carson/Desktop/Cours/proj_sys/src/game_logic.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argern.dir/build.make CMakeFiles/../igel_argern.dir/home/carson/Desktop/Cours/proj_sys/src/game_logic.c.s
+.PHONY : home/carson/Desktop/Cours/proj_sys/src/game_logic.c.s
 
 home/carson/Desktop/Cours/proj_sys/src/logging.o: home/carson/Desktop/Cours/proj_sys/src/logging.c.o
 .PHONY : home/carson/Desktop/Cours/proj_sys/src/logging.o
 
 # target to build an object file
 home/carson/Desktop/Cours/proj_sys/src/logging.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argens.dir/build.make CMakeFiles/../igel_argens.dir/home/carson/Desktop/Cours/proj_sys/src/logging.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argern.dir/build.make CMakeFiles/../igel_argern.dir/home/carson/Desktop/Cours/proj_sys/src/logging.c.o
 .PHONY : home/carson/Desktop/Cours/proj_sys/src/logging.c.o
 
 home/carson/Desktop/Cours/proj_sys/src/logging.i: home/carson/Desktop/Cours/proj_sys/src/logging.c.i
@@ -142,7 +190,7 @@ home/carson/Desktop/Cours/proj_sys/src/logging.i: home/carson/Desktop/Cours/proj
 
 # target to preprocess a source file
 home/carson/Desktop/Cours/proj_sys/src/logging.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argens.dir/build.make CMakeFiles/../igel_argens.dir/home/carson/Desktop/Cours/proj_sys/src/logging.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argern.dir/build.make CMakeFiles/../igel_argern.dir/home/carson/Desktop/Cours/proj_sys/src/logging.c.i
 .PHONY : home/carson/Desktop/Cours/proj_sys/src/logging.c.i
 
 home/carson/Desktop/Cours/proj_sys/src/logging.s: home/carson/Desktop/Cours/proj_sys/src/logging.c.s
@@ -150,7 +198,7 @@ home/carson/Desktop/Cours/proj_sys/src/logging.s: home/carson/Desktop/Cours/proj
 
 # target to generate assembly for a file
 home/carson/Desktop/Cours/proj_sys/src/logging.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argens.dir/build.make CMakeFiles/../igel_argens.dir/home/carson/Desktop/Cours/proj_sys/src/logging.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argern.dir/build.make CMakeFiles/../igel_argern.dir/home/carson/Desktop/Cours/proj_sys/src/logging.c.s
 .PHONY : home/carson/Desktop/Cours/proj_sys/src/logging.c.s
 
 home/carson/Desktop/Cours/proj_sys/src/main.o: home/carson/Desktop/Cours/proj_sys/src/main.c.o
@@ -158,7 +206,7 @@ home/carson/Desktop/Cours/proj_sys/src/main.o: home/carson/Desktop/Cours/proj_sy
 
 # target to build an object file
 home/carson/Desktop/Cours/proj_sys/src/main.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argens.dir/build.make CMakeFiles/../igel_argens.dir/home/carson/Desktop/Cours/proj_sys/src/main.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argern.dir/build.make CMakeFiles/../igel_argern.dir/home/carson/Desktop/Cours/proj_sys/src/main.c.o
 .PHONY : home/carson/Desktop/Cours/proj_sys/src/main.c.o
 
 home/carson/Desktop/Cours/proj_sys/src/main.i: home/carson/Desktop/Cours/proj_sys/src/main.c.i
@@ -166,7 +214,7 @@ home/carson/Desktop/Cours/proj_sys/src/main.i: home/carson/Desktop/Cours/proj_sy
 
 # target to preprocess a source file
 home/carson/Desktop/Cours/proj_sys/src/main.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argens.dir/build.make CMakeFiles/../igel_argens.dir/home/carson/Desktop/Cours/proj_sys/src/main.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argern.dir/build.make CMakeFiles/../igel_argern.dir/home/carson/Desktop/Cours/proj_sys/src/main.c.i
 .PHONY : home/carson/Desktop/Cours/proj_sys/src/main.c.i
 
 home/carson/Desktop/Cours/proj_sys/src/main.s: home/carson/Desktop/Cours/proj_sys/src/main.c.s
@@ -174,7 +222,7 @@ home/carson/Desktop/Cours/proj_sys/src/main.s: home/carson/Desktop/Cours/proj_sy
 
 # target to generate assembly for a file
 home/carson/Desktop/Cours/proj_sys/src/main.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argens.dir/build.make CMakeFiles/../igel_argens.dir/home/carson/Desktop/Cours/proj_sys/src/main.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argern.dir/build.make CMakeFiles/../igel_argern.dir/home/carson/Desktop/Cours/proj_sys/src/main.c.s
 .PHONY : home/carson/Desktop/Cours/proj_sys/src/main.c.s
 
 home/carson/Desktop/Cours/proj_sys/src/plateau.o: home/carson/Desktop/Cours/proj_sys/src/plateau.c.o
@@ -182,7 +230,7 @@ home/carson/Desktop/Cours/proj_sys/src/plateau.o: home/carson/Desktop/Cours/proj
 
 # target to build an object file
 home/carson/Desktop/Cours/proj_sys/src/plateau.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argens.dir/build.make CMakeFiles/../igel_argens.dir/home/carson/Desktop/Cours/proj_sys/src/plateau.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argern.dir/build.make CMakeFiles/../igel_argern.dir/home/carson/Desktop/Cours/proj_sys/src/plateau.c.o
 .PHONY : home/carson/Desktop/Cours/proj_sys/src/plateau.c.o
 
 home/carson/Desktop/Cours/proj_sys/src/plateau.i: home/carson/Desktop/Cours/proj_sys/src/plateau.c.i
@@ -190,7 +238,7 @@ home/carson/Desktop/Cours/proj_sys/src/plateau.i: home/carson/Desktop/Cours/proj
 
 # target to preprocess a source file
 home/carson/Desktop/Cours/proj_sys/src/plateau.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argens.dir/build.make CMakeFiles/../igel_argens.dir/home/carson/Desktop/Cours/proj_sys/src/plateau.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argern.dir/build.make CMakeFiles/../igel_argern.dir/home/carson/Desktop/Cours/proj_sys/src/plateau.c.i
 .PHONY : home/carson/Desktop/Cours/proj_sys/src/plateau.c.i
 
 home/carson/Desktop/Cours/proj_sys/src/plateau.s: home/carson/Desktop/Cours/proj_sys/src/plateau.c.s
@@ -198,7 +246,7 @@ home/carson/Desktop/Cours/proj_sys/src/plateau.s: home/carson/Desktop/Cours/proj
 
 # target to generate assembly for a file
 home/carson/Desktop/Cours/proj_sys/src/plateau.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argens.dir/build.make CMakeFiles/../igel_argens.dir/home/carson/Desktop/Cours/proj_sys/src/plateau.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/../igel_argern.dir/build.make CMakeFiles/../igel_argern.dir/home/carson/Desktop/Cours/proj_sys/src/plateau.c.s
 .PHONY : home/carson/Desktop/Cours/proj_sys/src/plateau.c.s
 
 # Help Target
@@ -209,7 +257,13 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... ../igel_argens"
+	@echo "... ../igel_argern"
+	@echo "... home/carson/Desktop/Cours/proj_sys/src/entry_point.o"
+	@echo "... home/carson/Desktop/Cours/proj_sys/src/entry_point.i"
+	@echo "... home/carson/Desktop/Cours/proj_sys/src/entry_point.s"
+	@echo "... home/carson/Desktop/Cours/proj_sys/src/game_logic.o"
+	@echo "... home/carson/Desktop/Cours/proj_sys/src/game_logic.i"
+	@echo "... home/carson/Desktop/Cours/proj_sys/src/game_logic.s"
 	@echo "... home/carson/Desktop/Cours/proj_sys/src/logging.o"
 	@echo "... home/carson/Desktop/Cours/proj_sys/src/logging.i"
 	@echo "... home/carson/Desktop/Cours/proj_sys/src/logging.s"
