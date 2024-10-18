@@ -135,9 +135,9 @@ int main(int argc, char** argv){
     board_t* new_board = board_alloc(line_count, row_count, player_count, hedgehog_count);
     init_board_default(new_board);
 
-    printf("Top_hedgehog : %c, height : %d", new_board->cells[0].stack[0], new_board->cells[0].s_top);
-
     board_print(new_board, 3); //TEST, doit passer la main à game_logic.c
+
+    play_round_every_player(new_board);
 
     board_free(new_board);
     return EXIT_SUCCESS;
