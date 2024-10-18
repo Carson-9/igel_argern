@@ -1,5 +1,6 @@
 #include "build_options.h"
 #include "plateau.h"
+#include "game_logic.h"
 #include "logging.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,6 +15,7 @@
     Dépendances : 
         - build_options.h   Permet de déterminer si le build actuel est de debug ou bien de production
         - plateau.h         Afin d'initialiser le plateau de jeu (ce fichier en est le responsable)
+        - game_logic.h      Permet d'appeler la boucle principale du jeu
         - logging.h         Fonctions générales de log, pour build debug ou de production
         - stdio.h           Pour interfaçer avec les fonctions de print et de lecture usuelles        
         - stdlib.h          Pour l'allocation des tableaux et cases considérées
@@ -131,9 +133,11 @@ int main(int argc, char** argv){
     }
 
     board_t* new_board = board_alloc(line_count, row_count, player_count, hedgehog_count);
-    board_setup_default(new_board);
-    board_print(new_board, 10); //TEST, doit passer la main à game_logic.c
+    init_board_default(new_board);
 
+    printf("Top_hedgehog : %c, height : %d", new_board->cells[0].stack[0], new_board->cells[0].s_top);
+
+    board_print(new_board, 3); //TEST, doit passer la main à game_logic.c
 
     board_free(new_board);
     return EXIT_SUCCESS;

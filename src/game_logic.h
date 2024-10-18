@@ -26,7 +26,7 @@
 
 u8 dice_roll(u8 max_value);
 
-
+void init_board_default(board_t* b);
 
 void play_round_single_player(board_t* b, u8 player);
 void play_round_every_player(board_t* b);

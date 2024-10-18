@@ -23,3 +23,6 @@ typedef float f32;
 typedef double f64;
 
 typedef u8 b8;
+
+#define true 1
+#define false 0
