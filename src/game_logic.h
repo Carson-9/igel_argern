@@ -10,7 +10,7 @@
 
 /*
 
-    Auteur : William
+    Auteur : William et Simon
     Contenu : Les fonctions définissant le comportement de la partie
 
     Dépendances : 
@@ -24,10 +24,18 @@
 
 #define MAX_DICE_VALUE 6
 
+#define SUCCESS 0
+#define ORIGIN_OOB 1
+#define CELL_EMPTY 2
+#define TARGET_OOB 3
+#define WRONG_PLAY 4
+
 u8 dice_roll(u8 max_value);
 void print_dice(u8 dice_val);
 
 void init_board_default(board_t* b);
+
+u8 move_vertically(board_t* b, u8 player, u8 line, u8 row, b8 is_going_up);
 
 void play_round_single_player(board_t* b, u8 player);
 void play_round_every_player(board_t* b);
