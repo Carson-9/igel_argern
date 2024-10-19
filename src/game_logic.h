@@ -22,11 +22,12 @@
         - stdlib.h          Pour l'allocation des tableaux et cases considérées
 */
 
-
+#define MAX_DICE_VALUE 6
 
 u8 dice_roll(u8 max_value);
+void print_dice(u8 dice_val);
 
-
+void init_board_default(board_t* b);
 
 void play_round_single_player(board_t* b, u8 player);
 void play_round_every_player(board_t* b);

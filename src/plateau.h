@@ -41,7 +41,7 @@ typedef struct cell_s{
     // Le stack sera pseudo-statique : L'utilisation d'un malloc est obligatoire, mais nous nous permetterons d'allouer un tableau de taille maximale dès le début
 
     u8* stack;      // Stocke les "hérissons" comme des caractères MAJUSCULE, toute apparition de minuscule doit résulter d'un offset imputé au caller.
-    u32 s_top;      // Le haut de la pile se lit a stack[s_top]
+    u32 s_top;      // Le haut de la pile se lit a stack[s_top - 1] (sinon décalage entre s_top = count et s_top = haut de pile : Ne peut pas distinguer pile vide et pile avec 1 hérisson) 
     b8 is_trap;
 
 } cell_t;
@@ -67,13 +67,13 @@ board_t* board_alloc(u8 line_count, u8 row_count, u8 player_count, u8 hedgehog_c
 void board_free(board_t* board);
 
 
-// Setup d'une partie par défaut
+// Setup des pièges d'une partie par défaut
 
-void board_setup_default(board_t* board);
+void board_setup_default_traps(board_t* board);
 
 // Fonctions d'interface
 
-void board_push(board_t* b, u8 line, u8 row, u8 ctn);
+void board_push(board_t* b, u8 line, u8 row, u8 hedgehog_char);
 
 u8 board_pop(board_t* b, u8 line, u8 row);
 
@@ -81,7 +81,7 @@ i32 board_height(board_t* b, u8 line, u8 row);
 
 u8 board_top(board_t* b, u8 line, u8 row);
 
-u8 board_peek(board_t* b, u8 line, u8 row, u8 pos); // pos=0 => top
+u8 board_peek(board_t* b, u8 line, u8 row, u8 pos); // pos =  0 => top
 
 b8 board_is_cell_trap(board_t* b, u8 line, u8 row); // Renvoie un booléen indiquant si la case pointée est piégée
 
