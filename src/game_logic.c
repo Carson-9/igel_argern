@@ -39,6 +39,17 @@ u8 to_upper(u8 c){
 }
 
 
+b8 is_an_active_trap(board_t* b, u8 line, u8 row){
+
+    if(b->cells[!point_to_index_conversion(line, row, b->line_count, b->row_count)].is_trap)return false;
+
+    for(int curr_row = 0; curr_row < row; curr_row++){
+        if(board_height(b, line, curr_row) > 0)return true;
+    }
+
+    return false;
+}
+
 
 void init_board_default(board_t* b){
 
@@ -80,6 +91,12 @@ u8 move_vertically(board_t* b, u8 player, u8 line, u8 row, b8 is_going_up){
         
         WARN_TERMINAL("move_vertically -> La case d'arrivée est hors du plateau !");
         return TARGET_OOB;
+    }
+
+    if(is_an_active_trap(b, row, line)){
+
+        WARN_TERMINAL("move-vertically -> La case de départ est piégée");
+        return MOVE_FROM_TRAP;
     }
 
     u8 moving_hedgehog = board_pop(b, line, row);

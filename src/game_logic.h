@@ -29,6 +29,7 @@
 #define CELL_EMPTY 2
 #define TARGET_OOB 3
 #define WRONG_PLAY 4
+#define MOVE_FROM_TRAP 5
 
 u8 dice_roll(u8 max_value);
 u8 random_line(board_t* b);
@@ -36,6 +37,8 @@ u8 bullet_or_empty_char(b8 cond);
 void print_dice(u8 dice_val);
 
 u8 to_upper(u8 c);
+
+b8 is_an_active_trap(board_t* b, u8 line, u8 row);
 
 void init_board_default(board_t* b);
 
