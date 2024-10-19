@@ -225,7 +225,7 @@ void cell_print(board_t* b, u8 line, u8 row, u8 slice){
             else{
 
                 u8 second_hedgehog = board_peek(b, line, row, 1) + uppercase_to_lowercase_offset;
-                u8 third_hedgehog = board_peek(b, line, row, 2) + uppercase_to_lowercase_offset;
+                u8 third_hedgehog = board_peek(b, line, row, 2);
                 u8 fourth_hedgehog = board_peek(b, line, row, 3) + uppercase_to_lowercase_offset;
                 printf("%c%c%c", second_hedgehog, third_hedgehog, fourth_hedgehog);
             }
