@@ -41,7 +41,7 @@ u8 to_upper(u8 c){
 
 b8 is_an_active_trap(board_t* b, u8 line, u8 row){
 
-    if(b->cells[!point_to_index_conversion(line, row, b->line_count, b->row_count)].is_trap)return false;
+    if(!b->cells[!point_to_index_conversion(line, row, b->line_count, b->row_count)].is_trap)return false;
 
     for(int curr_row = 0; curr_row < row; curr_row++){
         if(board_height(b, line, curr_row) > 0)return true;
@@ -93,7 +93,7 @@ u8 move_vertically(board_t* b, u8 player, u8 line, u8 row, b8 is_going_up){
         return TARGET_OOB;
     }
 
-    if(is_an_active_trap(b, row, line)){
+    if(is_an_active_trap(b, line, row)){
 
         WARN_TERMINAL("move-vertically -> La case de départ est piégée");
         return MOVE_FROM_TRAP;
@@ -182,6 +182,12 @@ void play_round_single_player(board_t* b, u8 player){
                 case WRONG_PLAY:
                 
                     printf("Le hérisson du dessus de cette case n'est pas dans votre équipe.\n\n");
+
+                    break;
+
+                case MOVE_FROM_TRAP:
+
+                    printf("Le hérisson est sur une case piégée, et il y a encore au moins un hérisson derrière lui.\n\n");
 
                     break;
                 
