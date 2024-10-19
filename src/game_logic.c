@@ -16,11 +16,6 @@ u8 bullet_or_empty_char(b8 cond){
     else return ' ';
 }
 
-u8 to_upper(u8 c){
-    if(c < 96) return(c);
-    else return c - 32;
-}
-
 void print_dice(u8 dice_val){
 
     u8 top_left_dot = bullet_or_empty_char(dice_val >= 2);
@@ -35,6 +30,12 @@ void print_dice(u8 dice_val){
 
     printf("      ----- \n     | %c %c |\n     | %c%c%c |\n     | %c %c |\n      ----- \n\n", 
         top_left_dot, top_right_dot, mid_left_dot, mid_dot, mid_right_dot, bot_left_dot, bot_right_dot);
+}
+
+
+u8 to_upper(u8 c){
+    if(c < 96) return(c);
+    else return c - 32;
 }
 
 

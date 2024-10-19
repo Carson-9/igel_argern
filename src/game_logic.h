@@ -31,7 +31,11 @@
 #define WRONG_PLAY 4
 
 u8 dice_roll(u8 max_value);
+u8 random_line(board_t* b);
+u8 bullet_or_empty_char(b8 cond);
 void print_dice(u8 dice_val);
+
+u8 to_upper(u8 c);
 
 void init_board_default(board_t* b);
 
