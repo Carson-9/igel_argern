@@ -14,7 +14,7 @@ u16 point_to_index_conversion(u8 line, u8 row, u8 line_count, u8 row_count){
 
 
 
-board_t* board_alloc(u8 line_count, u8 row_count, u8 player_count, u8 hedgehog_count){
+board_t* board_alloc(u8 line_count, u8 row_count, u8 player_count, u8 hedgehog_count, u8 clear_for_win){
    
     board_t* new_board = (board_t*)malloc(sizeof(board_t));
     
@@ -27,6 +27,7 @@ board_t* board_alloc(u8 line_count, u8 row_count, u8 player_count, u8 hedgehog_c
     new_board->line_count = line_count;
     new_board->player_count = player_count;
     new_board->hedgehog_count = hedgehog_count;
+    new_board->clear_for_win = clear_for_win;
 
     new_board->cells = (cell_t*)malloc(line_count * row_count * sizeof(cell_t));
     new_board->cleared_hedgehog_count = (u8*)malloc(player_count * sizeof(u8));
@@ -99,6 +100,9 @@ void board_push(board_t* b, u8 line, u8 row, u8 hedgehog){
     
     cell_t* c = &b->cells[point_to_index_conversion(line, row, b->line_count, b->row_count)];
     c->stack[c->s_top++] = hedgehog;
+
+    //Si un hérisson a bougé dans la dernière colonne, on l'ajoute au compte de ceux qui ont fini
+    if(row == b->row_count - 1)board_add_cleared_hedgehog(b, hedgehog - 'A');
 
 }
 

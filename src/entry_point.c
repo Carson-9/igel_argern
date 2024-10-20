@@ -9,7 +9,7 @@
 
 /*
 
-    Auteur :  William
+    Auteur :  William et Simon
     Contenu : Le point d'entrée (fonction main) du programme, Parsing des arguments et allocation mémoire du plateau
 
     Dépendances : 
@@ -33,6 +33,7 @@ int main(int argc, char** argv){
     u8 row_count = DEFAULT_ROW_COUNT;
     u8 player_count = DEFAULT_PLAYER_COUNT;
     u8 hedgehog_count = DEFAULT_HEDGEHOG_COUNT;
+    u8 clear_for_win = DEFAULT_CLEAR_FOR_WIN;
 
     // Initialise l'aléa
 
@@ -52,14 +53,17 @@ int main(int argc, char** argv){
                 \n\
     * PARAMÈTRES :                                                      \n\
         -h, -help       : Affiche le menu d'aide ci-présent             \n\
-        -lignes y       : Permet d'imposer un tableau à y lignes (y <= %d)       \n\
-        -colonnes y     : Permet d'imposer un tableau à x colonnes (x <= %d)     \n\
-        -joueurs z      : Impose un nombre z de joueurs (z <= %d)                \n\
-        -herissons h    : Chaque joueur commencera avec h hérissons (h <= %d)     \n\
+        -lignes y       : Permet d'imposer un tableau à y lignes (y <= %d) (par défaut : %d)                \n\
+        -colonnes x     : Permet d'imposer un tableau à x colonnes (x <= %d) (par défaut : %d)              \n\
+        -joueurs z      : Impose un nombre z de joueurs (z <= %d) (par défaut : %d)                         \n\
+        -herissons h    : Chaque joueur commencera avec h hérissons (h <= %d) (par défaut : %d)             \n\
+        -objectif o     : Un joueur doit amener v hérissons à la fin pour gagner (o <= h) (par défaut : %d) \n\
+                \n\
+        Si l'un des paramètres est plus grand que le maximum, il est ramené modulo le maximum               \n\
                 \n\
     * COMMENT JOUER :                                                   \n\
                                                                                     \n\
-            ", MAX_LINE_COUNT, MAX_ROW_COUNT, MAX_PLAYER_COUNT, MAX_HEDGEHOG_COUNT);
+            ", MAX_LINE_COUNT, DEFAULT_LINE_COUNT, MAX_ROW_COUNT, DEFAULT_ROW_COUNT, MAX_PLAYER_COUNT, DEFAULT_PLAYER_COUNT, MAX_HEDGEHOG_COUNT, DEFAULT_HEDGEHOG_COUNT, DEFAULT_CLEAR_FOR_WIN);
 
             return EXIT_SUCCESS;
         }
@@ -126,16 +130,31 @@ int main(int argc, char** argv){
             }
         }
 
+        else if(strcmp(argv[cur_argument], "-objectif") == 0){
+            if(cur_argument == argc - 1){
+                printf("NOMBRE DE PARAMÈTRES INSUFFISANT : l'option -objectif prend un paramètre numérique!\n");
+                return EXIT_FAILURE;
+            }
+
+            else{
+                clear_for_win = atoi(argv[++cur_argument]);
+            }
+        }
+
         else{       // Le paramètre est inconnu
             WARN_TERMINAL("Un paramètre est inconnu et de ce fait ignoré!");
         }
 
     }
 
-    board_t* new_board = board_alloc(line_count, row_count, player_count, hedgehog_count);
-    init_board_default(new_board);
 
-    board_print(new_board, 3); //TEST, doit passer la main à game_logic.c
+    if(clear_for_win > hedgehog_count){
+        WARN_TERMINAL("OBJECTIF TROP ÉLEVÉ");
+        clear_for_win = clear_for_win % hedgehog_count;
+    }
+
+    board_t* new_board = board_alloc(line_count, row_count, player_count, hedgehog_count, clear_for_win);
+    init_board_default(new_board);
 
     play_round_every_player(new_board);
 

@@ -41,13 +41,33 @@ u8 to_upper(u8 c){
 
 b8 is_an_active_trap(board_t* b, u8 line, u8 row){
 
-    if(!b->cells[!point_to_index_conversion(line, row, b->line_count, b->row_count)].is_trap)return false;
+    if(!b->cells[point_to_index_conversion(line, row, b->line_count, b->row_count)].is_trap)return false;
 
     for(int curr_row = 0; curr_row < row; curr_row++){
         if(board_height(b, line, curr_row) > 0)return true;
     }
 
     return false;
+}
+
+b8 exists_legal_move(board_t* b, u8 line){
+
+    for(int curr_row = 0; curr_row < b->row_count-1; curr_row++){
+        if(board_height(b, line, curr_row) > 0)return true;
+    }
+
+    return false;
+}
+
+u8 winner(board_t* b){
+
+    for(int curr_player = 0; curr_player < b->player_count; curr_player++){
+        if(b->cleared_hedgehog_count[curr_player] == b->clear_for_win){
+            return(curr_player);
+        }
+    }
+
+    return b->player_count;
 }
 
 
@@ -87,7 +107,7 @@ u8 move_vertically(board_t* b, u8 player, u8 line, u8 row, b8 is_going_up){
         return CELL_EMPTY;
     }
 
-    if(!point_is_in_board(line, new_line, b->line_count, b->row_count)){
+    if(!point_is_in_board(new_line, row, b->line_count, b->row_count)){
         
         WARN_TERMINAL("move_vertically -> La case d'arrivée est hors du plateau !");
         return TARGET_OOB;
@@ -95,7 +115,7 @@ u8 move_vertically(board_t* b, u8 player, u8 line, u8 row, b8 is_going_up){
 
     if(is_an_active_trap(b, line, row)){
 
-        WARN_TERMINAL("move-vertically -> La case de départ est piégée");
+        WARN_TERMINAL("move_vertically -> La case de départ est piégée !");
         return MOVE_FROM_TRAP;
     }
 
@@ -103,7 +123,8 @@ u8 move_vertically(board_t* b, u8 player, u8 line, u8 row, b8 is_going_up){
 
     if(moving_hedgehog != 'A' + player){
 
-        WARN_TERMINAL("move_vertically -> Le hérisson n'est pas dans l'équipe du joueur");
+        board_push(b, line, row, moving_hedgehog);
+        WARN_TERMINAL("move_vertically -> Le hérisson n'est pas dans l'équipe du joueur !");
         return WRONG_PLAY;
     }
         
@@ -112,9 +133,46 @@ u8 move_vertically(board_t* b, u8 player, u8 line, u8 row, b8 is_going_up){
 
 }
 
+u8 move_horizontally(board_t* b, u8 line, u8 row){
+
+    u8 new_row = row + 1;
+
+    if(!point_is_in_board(line, row, b->line_count, b->row_count)){
+        
+        WARN_TERMINAL("move_horizontally -> La case de départ est hors du plateau !");
+        return ORIGIN_OOB;
+    }
+
+    if(board_height(b, line, row) == 0){
+
+        WARN_TERMINAL("move_horizontally -> La case d'origine est vide !");
+        return CELL_EMPTY;
+    }
+
+    if(!point_is_in_board(line, new_row, b->line_count, b->row_count)){
+        
+        WARN_TERMINAL("move_horizontally -> La case d'arrivée est hors du plateau !");
+        return TARGET_OOB;
+    }
+
+    if(is_an_active_trap(b, line, row)){
+
+        WARN_TERMINAL("move_horizontally -> La case de départ est piégée !");
+        return MOVE_FROM_TRAP;
+    }
+
+    u8 moving_hedgehog = board_pop(b, line, row);
+    
+    //L'éventuel enregistrement d'un hérisson parmi ceux qui ont fini se fait dans board_push
+    board_push(b, line, new_row, moving_hedgehog);
+
+    return SUCCESS;
+
+}
+
 void play_round_single_player(board_t* b, u8 player){
     
-    u8 dice_val = dice_roll(MAX_DICE_VALUE);
+    u8 dice_val = dice_roll(b->line_count);
 
     u8 does_vertical_movement;
     u8 vertical_movement_line;
@@ -122,10 +180,13 @@ void play_round_single_player(board_t* b, u8 player){
     b8 vertical_direction;
     b8 vertical_going_up;
     u8 vertical_move_status = SUCCESS + 1;
+
+    u8 horizontal_movement_row;
+    u8 horizontal_move_status = SUCCESS + 1;
     
-    
+    board_print(b, dice_val - 1);
     printf("* Joueur %c - Le dé donne :\n\n", 'A' + player);
-    print_dice(dice_val);
+    if(b->line_count <= MAX_DICE_VALUE)print_dice(dice_val);
 
     printf("Voulez-vous bouger un hérisson verticalement (N/o) ?\n");
     scanf(" %c", &does_vertical_movement);
@@ -145,16 +206,14 @@ void play_round_single_player(board_t* b, u8 player){
 
         vertical_going_up = (to_upper(vertical_direction) != 'B');
 
-        printf("%d, %d\n", (int)vertical_movement_line, (int)vertical_movement_row);
-
         vertical_move_status = move_vertically(b, player, vertical_movement_line, vertical_movement_row, vertical_going_up);
 
         if(vertical_move_status == SUCCESS){
 
             board_print(b, dice_val-1);
-            printf("Vous avez bougé verticalement.\n");
+            printf("Vous avez bougé un hérisson verticalement.\n");
             printf("Joueur %c - Le dé donne :\n\n", 'A' + player);
-            print_dice(dice_val);
+            if(b->line_count <= MAX_DICE_VALUE)print_dice(dice_val);
         }
 
         else{
@@ -204,13 +263,76 @@ void play_round_single_player(board_t* b, u8 player){
         }
     }
 
-    if(b) return;
+    printf("\n-----Déplacement horizontal-----\n\n");
 
+    if(!exists_legal_move(b, dice_val-1)){
+
+        printf("Aucun coup légal dans cette position.\n");
+        printf("Le tour du joueur %c est passé.\n\n", 'A'+player);
+        return;
+    }
+
+    while(!horizontal_move_status == SUCCESS){
+
+        printf("Depuis quelle colonne voulez-vous bouger ?\n");
+        scanf(" %c", &horizontal_movement_row);
+        horizontal_movement_row = to_upper(horizontal_movement_row) - 'A';
+
+        horizontal_move_status = move_horizontally(b, dice_val - 1, horizontal_movement_row);
+
+        switch(horizontal_move_status){
+
+            case SUCCESS:
+            
+                printf("Vous aves bougé un hérisson horizontalement.\n\n");
+
+                break;
+
+            case ORIGIN_OOB:
+                
+                printf("La case donnée est hors du plateau.\n\n");
+
+                break;
+
+            case CELL_EMPTY:
+                
+                printf("La case donnée est vide.\n\n");
+
+                break;
+                
+            case TARGET_OOB:
+                
+                printf("La case d'arrivée est hors du plateau.\n\n");
+
+                break;
+
+            case MOVE_FROM_TRAP:
+
+                printf("Le hérisson est sur une case piégée, et il y a encore au moins un hérisson derrière lui.\n\n");
+
+                break;
+                
+            default:
+                
+                printf("Une erreur inconnue est survenue.\n\n");
+
+                break;
+        }
+    }
 }
 
 void play_round_every_player(board_t* b){
-    play_round_single_player(b, 0);
-     if(b) return;
+
+    u8 winning_player = b->player_count;
+    u8 curr_player = 0;
+
+    while(winning_player == b->player_count){
+        play_round_single_player(b, curr_player);
+        curr_player = (1+curr_player)%b->player_count;
+        winning_player = winner(b);
+    }
+
+    printf("Le joueur %c a gagné ! Félicitations !\n\n", 'A' + winning_player);
 }
 
 

@@ -39,10 +39,15 @@ void print_dice(u8 dice_val);
 u8 to_upper(u8 c);
 
 b8 is_an_active_trap(board_t* b, u8 line, u8 row);
+b8 exists_legal_move(board_t* b, u8 line);
+
+u8 winner(board_t* b);
 
 void init_board_default(board_t* b);
 
 u8 move_vertically(board_t* b, u8 player, u8 line, u8 row, b8 is_going_up);
+
+u8 move_horizontally(board_t* b, u8 line, u8 row);
 
 void play_round_single_player(board_t* b, u8 player);
 void play_round_every_player(board_t* b);
