@@ -168,7 +168,7 @@ void print_players_rank(board_t* b){
 
     // Réalisation d'une liste des rangs grâce à quicksort
 
-    // -Wpedantic râle sur le fait que les fonctions imbriquées soient interdites selon ISO
+    // -Wpedantic râle sur le fait que les fonctions imbriquées soient interdites selon ISO ...
     // Ici, besoin du board local dans l'appel de fonction, solution la plus propre à mon avis
     // TODO Trouver mieux ?
     #pragma GCC diagnostic ignored "-Wpedantic"
