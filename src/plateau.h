@@ -25,17 +25,13 @@
 #define DEFAULT_ROW_COUNT 9
 #define DEFAULT_PLAYER_COUNT 4
 #define DEFAULT_HEDGEHOG_COUNT 4
-#define DEFAULT_CLEAR_FOR_WIN 3
+#define DEFAULT_HEDGEHOG_WINNING_COUNT 3
 
 #define MAX_LINE_COUNT 100
 #define MAX_ROW_COUNT 26
 #define MAX_PLAYER_COUNT 26
 #define MAX_HEDGEHOG_COUNT 100
 
-
-#define PRINT_FORMAT_LINE_INFO_SIZE 6
-#define PRINT_FORMAT_LINE_CELL_SIZE 5
-#define PRINT_FORMAT_LINE_SPACING 1
 
 typedef struct cell_s{
 
@@ -49,11 +45,11 @@ typedef struct cell_s{
 
 typedef struct board_s{
 
-    u8 row_count;
-    u8 line_count;
-    u8 player_count;
-    u8 hedgehog_count;
-    u8 clear_for_win;
+    u8 row_count;       // Nombre de colonnes
+    u8 line_count;      // Nombre de lignes
+    u8 player_count;    // Nombre de joueurs
+    u8 hedgehog_count;  // Nombre de hérissons par joueur
+    u8 hedgehog_winning_count;   // Nombre de hérissons pour gagner, une extension pourrait le modifier
 
     cell_t* cells;                  // La manipulation d'un unique indice s'avère beaucoup plus simple finalement ...
     u8* cleared_hedgehog_count;     // Tableau dénotant le nombre de hérissons du joueur i ayant terminé la course à la case du même indice
@@ -65,7 +61,7 @@ u16 point_to_index_conversion(u8 line, u8 row, u8 line_count, u8 row_count);
 
 // Allocation du plateau
 
-board_t* board_alloc(u8 line_count, u8 row_count, u8 player_count, u8 hedgehog_count, u8 clear_for_win);
+board_t* board_alloc(u8 line_count, u8 row_count, u8 player_count, u8 hedgehog_count, u8 hedgehog_winning_count);
 void board_free(board_t* board);
 
 

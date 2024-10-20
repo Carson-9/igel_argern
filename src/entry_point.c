@@ -1,3 +1,20 @@
+/*  
+  _____           _    _   _                            
+ |_   _|         | |  (_)_(_)                           
+   | |  __ _  ___| |    / \   _ __ __ _  ___ _ __ _ __  
+   | | / _` |/ _ \ |   / _ \ | '__/ _` |/ _ \ '__| '_ \ 
+  _| || (_| |  __/ |  / ___ \| | | (_| |  __/ |  | | | |
+ |_____\__, |\___|_| /_/   \_\_|  \__, |\___|_|  |_| |_|
+        __/ |                      __/ |                
+       |___/                      |___/                 
+
+    (Généré sur https://patorjk.com/software/taag/)
+
+*/
+
+
+
+
 #include "build_options.h"
 #include "plateau.h"
 #include "game_logic.h"
@@ -10,7 +27,7 @@
 /*
 
     Auteur :  William et Simon
-    Contenu : Le point d'entrée (fonction main) du programme, Parsing des arguments et allocation mémoire du plateau
+    Contenu : Le point d'entrée (fonction main) du programme, Parsing des arguments et initialisation mémoire du plateau
 
     Dépendances : 
         - build_options.h   Permet de déterminer si le build actuel est de debug ou bien de production
@@ -33,7 +50,7 @@ int main(int argc, char** argv){
     u8 row_count = DEFAULT_ROW_COUNT;
     u8 player_count = DEFAULT_PLAYER_COUNT;
     u8 hedgehog_count = DEFAULT_HEDGEHOG_COUNT;
-    u8 clear_for_win = DEFAULT_CLEAR_FOR_WIN;
+    u8 clear_for_win = DEFAULT_HEDGEHOG_WINNING_COUNT;
 
     // Initialise l'aléa
 
@@ -63,7 +80,8 @@ int main(int argc, char** argv){
                 \n\
     * COMMENT JOUER :                                                   \n\
                                                                                     \n\
-            ", MAX_LINE_COUNT, DEFAULT_LINE_COUNT, MAX_ROW_COUNT, DEFAULT_ROW_COUNT, MAX_PLAYER_COUNT, DEFAULT_PLAYER_COUNT, MAX_HEDGEHOG_COUNT, DEFAULT_HEDGEHOG_COUNT, DEFAULT_CLEAR_FOR_WIN);
+            ", MAX_LINE_COUNT, DEFAULT_LINE_COUNT, MAX_ROW_COUNT, DEFAULT_ROW_COUNT, MAX_PLAYER_COUNT,
+             DEFAULT_PLAYER_COUNT, MAX_HEDGEHOG_COUNT, DEFAULT_HEDGEHOG_COUNT, DEFAULT_HEDGEHOG_WINNING_COUNT);
 
             return EXIT_SUCCESS;
         }
@@ -156,7 +174,7 @@ int main(int argc, char** argv){
     board_t* new_board = board_alloc(line_count, row_count, player_count, hedgehog_count, clear_for_win);
     init_board_default(new_board);
 
-    play_round_every_player(new_board);
+    default_game_loop(new_board);
 
     board_free(new_board);
     return EXIT_SUCCESS;
