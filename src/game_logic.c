@@ -86,6 +86,13 @@ move_value_t move_vertically(board_t* b, u8 player, u8 line, u8 row, b8 is_going
     if(is_going_up) offset = -offset;
     i16 new_line = line + offset;
 
+    if(new_line < 0){   // point_is_in_board travaille avec des non-signés, le cas négatif est traité ici!
+        WARN_TERMINAL("move_vertically -> La case d'arrivée est hors du plateau !");
+        return target_oob;
+    }
+
+    
+
     //Si le coup demandé par les arguments n'est pas possible, il est ignoré et, dans un build de debug, on log un warning
     //Ensuite, on renvoie un code d'erreur approprié
     if(!point_is_in_board(line, row, b->line_count, b->row_count)){

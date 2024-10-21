@@ -49,6 +49,6 @@ void error_terminal(char* message);
 
     // Dans un build de production, ne pas log les traces informatives et les warnings (remplacés par une instruction vide)
 
-    #define TRACE_TERMINAL(msg)
-    #define WARN_TERMINAL(msg)
+    #define TRACE_TERMINAL(msg) do{break;}while(0)      // Évite les warning empty body
+    #define WARN_TERMINAL(msg) do{break;}while(0)       // Évite les warning empty body
 #endif

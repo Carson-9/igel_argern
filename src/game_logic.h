@@ -33,12 +33,6 @@ typedef enum{
     move_from_trap
 } move_value_t;
 
-#define SUCCESS 0
-#define ORIGIN_OOB 1
-#define CELL_EMPTY 2
-#define TARGET_OOB 3
-#define WRONG_PLAY 4
-#define MOVE_FROM_TRAP 5
 
 u8 dice_roll(u8 max_value);
 u8 random_line(board_t* b);
