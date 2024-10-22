@@ -88,7 +88,11 @@ int main(int argc, char** argv){
                 \n\
         Si l'un des paramètres est plus grand que le maximum (ou entrée invalide), il est ramené modulo le maximum.\n\
                 \n\
-    * COMMENT JOUER :                                                   \n\
+    * COMMENT JOUER :                                                                       \n\
+        Lors du tour d'un joueur, ce dernier lancera (automatiquement) un dé                \n\
+        désignant la ligne où il est possible d'avancer un hérisson. Avant cela,            \n\
+        un joueur peut choisir de déplacer latéralement d'une case l'un de ses hérissons    \n\
+        afin de compliquer la tâche d'autres joueurs, ou bien de faciliter son déplacement. \n\
                                                                         \n", 
             MAX_LINE_COUNT, DEFAULT_LINE_COUNT, MAX_ROW_COUNT, DEFAULT_ROW_COUNT, MAX_PLAYER_COUNT,
              DEFAULT_PLAYER_COUNT, MAX_HEDGEHOG_COUNT, DEFAULT_HEDGEHOG_COUNT, DEFAULT_HEDGEHOG_WINNING_COUNT);
