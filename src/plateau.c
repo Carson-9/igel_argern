@@ -14,7 +14,7 @@ u16 point_to_index_conversion(u8 line, u8 row, u8 line_count, u8 row_count){
 
 
 
-board_t* board_alloc(u8 line_count, u8 row_count, u8 player_count, u8 hedgehog_count, u8 hedgehog_winning_count){
+board_t* board_alloc(u8 line_count, u8 row_count, u8 player_count, u8 hedgehog_count, u8 hedgehog_winning_count, u64 default_flag){
    
     board_t* new_board = (board_t*)malloc(sizeof(board_t));
     
@@ -31,6 +31,8 @@ board_t* board_alloc(u8 line_count, u8 row_count, u8 player_count, u8 hedgehog_c
 
     new_board->cells = (cell_t*)malloc(line_count * row_count * sizeof(cell_t));
     new_board->cleared_hedgehog_count = (u8*)malloc(player_count * sizeof(u8));
+
+    new_board->extensions_flag = default_flag; 
 
     if(!new_board->cells || !new_board->cleared_hedgehog_count){  // TODO: Créer une macro magique pour observer les bad allocations et les log avec __FILE__ __LINE__ ...
         ERROR_TERMINAL("board_init -> L'allocation des tableaux interne n'a pas réussi!");
@@ -93,6 +95,14 @@ void board_setup_default_traps(board_t* board){
 
 }
 
+
+void board_add_extension(board_t* b, extension_flag_value flag){
+    b->extensions_flag |= flag;
+}
+
+b8 board_has_extension(board_t* b, extension_flag_value flag){
+    return (b->extensions_flag & flag);
+}
 
 
 

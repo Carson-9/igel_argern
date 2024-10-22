@@ -87,11 +87,16 @@ move_value_t move_vertically(board_t* b, u8 player, u8 line, u8 row, b8 is_going
     i16 new_line = line + offset;
 
     if(new_line < 0){   // point_is_in_board travaille avec des non-signés, le cas négatif est traité ici!
-        WARN_TERMINAL("move_vertically -> La case d'arrivée est hors du plateau !");
-        return target_oob;
+        
+        if(board_has_extension(b, tube_extension)) new_line = (b->line_count - 1);
+
+        else{
+            WARN_TERMINAL("move_vertically -> La case d'arrivée est hors du plateau !");
+            return target_oob;
+        }
     }
 
-    
+    if(new_line == b->line_count && board_has_extension(b, tube_extension)) new_line = 0;
 
     //Si le coup demandé par les arguments n'est pas possible, il est ignoré et, dans un build de debug, on log un warning
     //Ensuite, on renvoie un code d'erreur approprié
@@ -121,7 +126,7 @@ move_value_t move_vertically(board_t* b, u8 player, u8 line, u8 row, b8 is_going
 
     u8 moving_hedgehog = board_pop(b, line, row);
 
-    if(moving_hedgehog != 'A' + player){
+    if(!board_has_extension(b, anarchy_extension) && moving_hedgehog != 'A' + player){
 
         board_push(b, line, row, moving_hedgehog);
         WARN_TERMINAL("move_vertically -> Le hérisson n'est pas dans l'équipe du joueur !");
@@ -184,7 +189,7 @@ void print_players_rank(board_t* b){
         // retourne un nombre négatif si first_player a réussi à plaçer plus de hérissons
         // Nous trions par nombre décroissant de cleared_hedgehog
         return -(b->cleared_hedgehog_count[*(const int*)first_player] - b->cleared_hedgehog_count[*(const int*)second_player]);
-    }
+    };
 
     u8 player_rank_table[b->player_count];
     for(u8 player = 0; player < b->player_count; player++) player_rank_table[player] = player;
@@ -220,6 +225,68 @@ void print_players_rank(board_t* b){
 
 }
 
+void print_vertical_error(move_value_t move_type){
+
+    switch(move_type){
+
+                case origin_oob:
+                    printf("La case donnée est hors du plateau.\n\n");
+                    break;
+
+                case cell_empty:
+                    printf("La case donnée est vide.\n\n");
+                    break;
+                
+                case target_oob:
+                    printf("La case d'arrivée est hors du plateau.\n\n");
+                    break;
+                
+                case wrong_play:
+                    printf("Le hérisson du dessus de cette case n'est pas dans votre équipe.\n\n");
+                    break;
+
+                case move_from_trap:
+                    printf("Le hérisson est sur une case piégée, et il y a encore au moins un hérisson derrière lui.\n\n");
+                    break;
+                
+                default:
+                    printf("Une erreur inconnue est survenue.\n\n");
+                    break;
+            }
+}
+
+
+void print_horizontal_move_status(move_value_t move_type){
+
+    switch(move_type){
+
+            case success:
+                printf("Vous aves bougé un hérisson horizontalement.\n\n");
+                break;
+
+            case origin_oob:
+                printf("La case donnée est hors du plateau.\n\n");
+                break;
+
+            case cell_empty:
+                printf("La case donnée est vide.\n\n");
+                break;
+                
+            case target_oob:
+                printf("La case d'arrivée est hors du plateau.\n\n");
+                break;
+
+            case move_from_trap:
+                printf("Le hérisson est sur une case piégée, et il y a encore au moins un hérisson derrière lui.\n\n");
+                break;
+                
+            default:
+                printf("Une erreur inconnue est survenue.\n\n");
+                break;
+        }
+
+}
+
 
 
 void play_round_single_player(board_t* b, u8 player){
@@ -241,6 +308,11 @@ void play_round_single_player(board_t* b, u8 player){
     printf("* Joueur %c - Le dé donne :\n\n", 'A' + player);
     if(b->line_count <= MAX_DICE_VALUE) print_dice(dice_val);
     else printf("  --- %d --- \n\n", dice_val);
+
+
+    // Déplacement vertical
+
+    // TODO : Refactor ce code proprement! (et le faire comme horizontal_move aussi)
 
     printf("Voulez-vous bouger un hérisson verticalement (N/o) ?\n");
     scanf(" %c", &does_vertical_movement);
@@ -272,44 +344,7 @@ void play_round_single_player(board_t* b, u8 player){
 
         else{
 
-            switch(vertical_move_status){
-
-                case origin_oob:
-                
-                    printf("La case donnée est hors du plateau.\n\n");
-
-                    break;
-
-                case cell_empty:
-                
-                    printf("La case donnée est vide.\n\n");
-
-                    break;
-                
-                case target_oob:
-                
-                    printf("La case d'arrivée est hors du plateau.\n\n");
-
-                    break;
-                
-                case wrong_play:
-                
-                    printf("Le hérisson du dessus de cette case n'est pas dans votre équipe.\n\n");
-
-                    break;
-
-                case move_from_trap:
-
-                    printf("Le hérisson est sur une case piégée, et il y a encore au moins un hérisson derrière lui.\n\n");
-
-                    break;
-                
-                default:
-                
-                    printf("Une erreur inconnue est survenue.\n\n");
-
-                    break;
-            }
+            print_vertical_error(vertical_move_status);
 
             printf("Voulez-vous réessayer un déplacement vertical (N/o) ?\n");
             scanf(" %c", &does_vertical_movement);
@@ -333,45 +368,7 @@ void play_round_single_player(board_t* b, u8 player){
         horizontal_movement_row = to_upper(horizontal_movement_row) - 'A';
 
         horizontal_move_status = move_horizontally(b, dice_val - 1, horizontal_movement_row);
-
-        switch(horizontal_move_status){
-
-            case success:
-            
-                printf("Vous aves bougé un hérisson horizontalement.\n\n");
-
-                break;
-
-            case origin_oob:
-                
-                printf("La case donnée est hors du plateau.\n\n");
-
-                break;
-
-            case cell_empty:
-                
-                printf("La case donnée est vide.\n\n");
-
-                break;
-                
-            case target_oob:
-                
-                printf("La case d'arrivée est hors du plateau.\n\n");
-
-                break;
-
-            case move_from_trap:
-
-                printf("Le hérisson est sur une case piégée, et il y a encore au moins un hérisson derrière lui.\n\n");
-
-                break;
-                
-            default:
-                
-                printf("Une erreur inconnue est survenue.\n\n");
-
-                break;
-        }
+        print_horizontal_move_status(horizontal_move_status);
     }
 }
 

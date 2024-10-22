@@ -33,6 +33,14 @@
 #define MAX_HEDGEHOG_COUNT 100
 
 
+typedef enum{
+    // Grrr... Travailler avec des constantes binaires pour des flags est sympathique, mais pas avant C23...
+    tube_extension = 1,     // 0b1
+    anarchy_extension = 2,  // 0b10,
+    third_extension = 4     // 0b100,
+} extension_flag_value;
+
+
 typedef struct cell_s{
 
     // Le stack sera pseudo-statique : L'utilisation d'un malloc est obligatoire, mais nous nous permetterons d'allouer un tableau de taille maximale dès le début
@@ -54,6 +62,8 @@ typedef struct board_s{
     cell_t* cells;                  // La manipulation d'un unique indice s'avère beaucoup plus simple finalement ...
     u8* cleared_hedgehog_count;     // Tableau dénotant le nombre de hérissons du joueur i ayant terminé la course à la case du même indice
     
+    u64 extensions_flag;
+
 } board_t;
 
 b8 point_is_in_board(u8 line, u8 row, u8 line_count, u8 row_count);
@@ -61,13 +71,19 @@ u16 point_to_index_conversion(u8 line, u8 row, u8 line_count, u8 row_count);
 
 // Allocation du plateau
 
-board_t* board_alloc(u8 line_count, u8 row_count, u8 player_count, u8 hedgehog_count, u8 hedgehog_winning_count);
+board_t* board_alloc(u8 line_count, u8 row_count, u8 player_count, u8 hedgehog_count, u8 hedgehog_winning_count, u64 default_flag);
 void board_free(board_t* board);
 
 
 // Setup des pièges d'une partie par défaut
 
 void board_setup_default_traps(board_t* board);
+
+// Traitement des extensions
+
+void board_add_extension(board_t* b, extension_flag_value flag);
+b8 board_has_extension(board_t* b, extension_flag_value flag);
+
 
 // Fonctions d'interface
 

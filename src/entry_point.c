@@ -41,6 +41,13 @@
 */
 
 
+u64 match_extension_name(char* extension_name){
+    if(strcmp(extension_name, "tube") == 0) return 1;           // 0b1;
+    if(strcmp(extension_name, "anarchie") == 0) return 2;       // 0b10;
+    printf("L'extension : \"%s\" est inconnue!\n", extension_name);
+    return 0;       // 0b0;
+}
+
 
 int main(int argc, char** argv){
 
@@ -51,6 +58,7 @@ int main(int argc, char** argv){
     u8 player_count = DEFAULT_PLAYER_COUNT;
     u8 hedgehog_count = DEFAULT_HEDGEHOG_COUNT;
     u8 clear_for_win = DEFAULT_HEDGEHOG_WINNING_COUNT;
+    u64 extensions_flag = 0;            // 0b0;
 
     // Initialise l'aléa
 
@@ -75,6 +83,8 @@ int main(int argc, char** argv){
         -joueurs z      : Impose un nombre z de joueurs (z <= %d) (par défaut : %d)                         \n\
         -herissons h    : Chaque joueur commencera avec h hérissons (h <= %d) (par défaut : %d)             \n\
         -objectif o     : Un joueur doit amener v hérissons à la fin pour gagner (o <= h) (par défaut : %d) \n\
+        -variante v     : Permet d'ajouter une variante au jeu (v = tube | anarchie | )                     \n\
+                        (A noter que les extensions sont additives!)                                        \n\
                 \n\
         Si l'un des paramètres est plus grand que le maximum (ou entrée invalide), il est ramené modulo le maximum.\n\
                 \n\
@@ -159,6 +169,17 @@ int main(int argc, char** argv){
             }
         }
 
+        else if(strcmp(argv[cur_argument], "-variante") == 0){
+            if(cur_argument == argc - 1){
+                printf("NOMBRE DE PARAMÈTRES INSUFFISANT : l'option -variante prend un paramètre numérique!\n");
+                return EXIT_FAILURE;
+            }
+
+            // Le cas d'une extension inconnue est implicite!
+            else extensions_flag |= match_extension_name(argv[++cur_argument]);
+            
+        }
+
         else{       // Le paramètre est inconnu
             WARN_TERMINAL("Un paramètre est inconnu et de ce fait ignoré!");
         }
@@ -171,7 +192,7 @@ int main(int argc, char** argv){
         clear_for_win = clear_for_win % hedgehog_count;
     }
 
-    board_t* new_board = board_alloc(line_count, row_count, player_count, hedgehog_count, clear_for_win);
+    board_t* new_board = board_alloc(line_count, row_count, player_count, hedgehog_count, clear_for_win, extensions_flag);
     init_board_default(new_board);
 
     default_game_loop(new_board);

@@ -51,6 +51,9 @@ void init_board_default(board_t* b);
 move_value_t move_vertically(board_t* b, u8 player, u8 line, u8 row, b8 is_going_up);
 move_value_t move_horizontally(board_t* b, u8 line, u8 row);
 
+void print_vertical_error(move_value_t move_type);
+void print_horizontal_move_status(move_value_t move_type);
+
 void print_players_rank(board_t* b);
 
 void play_round_single_player(board_t* b, u8 player);
