@@ -191,7 +191,7 @@ void print_players_rank(board_t* b){
         return -(b->cleared_hedgehog_count[*(const int*)first_player] - b->cleared_hedgehog_count[*(const int*)second_player]);
     };
 
-    u8 player_rank_table[b->player_count];
+    u8* player_rank_table = (u8*) malloc(b->player_count * sizeof(u8));
     for(u8 player = 0; player < b->player_count; player++) player_rank_table[player] = player;
 
     qsort(player_rank_table, b->player_count, sizeof(u8), compare_players_fun);
@@ -261,7 +261,7 @@ void print_horizontal_move_status(move_value_t move_type){
     switch(move_type){
 
             case success:
-                printf("Vous aves bougé un hérisson horizontalement.\n\n");
+                printf("Vous avez bougé un hérisson horizontalement.\n\n");
                 break;
 
             case origin_oob:
