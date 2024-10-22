@@ -31,6 +31,7 @@ board_t* board_alloc(u8 line_count, u8 row_count, u8 player_count, u8 hedgehog_c
 
     new_board->cells = (cell_t*)malloc(line_count * row_count * sizeof(cell_t));
     new_board->cleared_hedgehog_count = (u8*)malloc(player_count * sizeof(u8));
+    for(u8 player = 0; player < player_count; player++) new_board->cleared_hedgehog_count[player] = 0;
 
     new_board->extensions_flag = default_flag; 
 
@@ -112,7 +113,7 @@ void board_push(board_t* b, u8 line, u8 row, u8 hedgehog){
     c->stack[c->s_top++] = hedgehog;
 
     //Si un hérisson a bougé dans la dernière colonne, on l'ajoute au compte de ceux qui ont fini
-    if(row == b->row_count - 1)board_add_cleared_hedgehog(b, hedgehog - 'A');
+    if(row == b->row_count - 1) board_add_cleared_hedgehog(b, hedgehog - 'A');
 
 }
 
