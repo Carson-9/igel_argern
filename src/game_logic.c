@@ -188,8 +188,8 @@ void print_players_rank(board_t* b){
     int compare_players_fun(const void* first_player, const void* second_player){
         // retourne un nombre négatif si first_player a réussi à plaçer plus de hérissons
         // Nous trions par nombre décroissant de cleared_hedgehog
-        return - (((int)b->cleared_hedgehog_count[*(u8*)first_player]) - ((int)b->cleared_hedgehog_count[*(u8*)second_player]));
-    }
+        return - (((int)b->cleared_hedgehog_count[*((u8*)first_player)]) - ((int)b->cleared_hedgehog_count[*((u8*)second_player)]));
+    };
 
     u8* player_rank_table = (u8*) malloc(b->player_count * sizeof(u8));
     for(u8 player = 0; player < b->player_count; player++) player_rank_table[player] = player;
@@ -199,16 +199,15 @@ void print_players_rank(board_t* b){
     // player_rank_table contient les indices de joueurs par nombre de cleared_hedgehog décroissant
 
     u8 virtual_rank = 0;    // Rang unique pour chaque joueur, différencie ceux ayant le même rang réel
-    u8 actual_rank = 0;     // Vrai rang : Gère les cas d'égalité.
     u8 current_cleared_hedgehog_count = b->cleared_hedgehog_count[player_rank_table[0]];
 
     printf(" --- La partie est terminée !! ---\n\n");
 
     while(virtual_rank < b->player_count){
         
-        printf(" - Place #%d : ", actual_rank + 1);
+        printf(" - Place #%d : ", virtual_rank + 1);
         
-        while((virtual_rank < b->player_count) && (current_cleared_hedgehog_count == b->cleared_hedgehog_count[virtual_rank])){
+        while((virtual_rank < b->player_count) && (current_cleared_hedgehog_count == b->cleared_hedgehog_count[player_rank_table[virtual_rank]])){
             printf("Équipe %c, ", 'A' + player_rank_table[virtual_rank]);
             virtual_rank++;
         }
@@ -216,10 +215,8 @@ void print_players_rank(board_t* b){
         if(current_cleared_hedgehog_count > 1) printf("(Avec %d hérissons)\n", current_cleared_hedgehog_count);
         else printf("(Avec %d hérisson)\n", current_cleared_hedgehog_count);
 
-        if(virtual_rank < b->player_count){
-            current_cleared_hedgehog_count = b->cleared_hedgehog_count[virtual_rank];
-            actual_rank = virtual_rank;
-        }
+        if(virtual_rank < b->player_count) current_cleared_hedgehog_count = b->cleared_hedgehog_count[player_rank_table[virtual_rank]];
+        
 
     }
 

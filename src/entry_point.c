@@ -175,7 +175,7 @@ int main(int argc, char** argv){
 
         else if(strcmp(argv[cur_argument], "-variante") == 0){
             if(cur_argument == argc - 1){
-                printf("NOMBRE DE PARAMÈTRES INSUFFISANT : l'option -variante prend un paramètre numérique!\n");
+                printf("NOMBRE DE PARAMÈTRES INSUFFISANT : l'option -variante prend un paramètre string!\n");
                 return EXIT_FAILURE;
             }
 
