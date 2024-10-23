@@ -17,6 +17,8 @@ Les options disponibles sont :
  - -colonnes : Le nombre de colonnes sur le plateau
  - -joueurs : Le nombre de joueurs souhaités dans la partie
  - -herissons : Le nombre de hérissons par joueur
+ - -objectif : Le nombre de hérissons nécéssaires pour gagner
+ - -variante : Ajout d'une variante souhaitée (parmi "tube" ou "anarchie")
 
 
 ## Build
@@ -26,3 +28,5 @@ Nous avons utilisé l'utilitaire cmake afin de produire un makefile exhaustif re
 
 ## Contenu 
     - Le jeu de base
+    - L'extension Tube
+    - L'extension Anarchie
